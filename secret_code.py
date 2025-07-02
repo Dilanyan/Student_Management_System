@@ -1,8 +1,9 @@
 secret_name = input("Hi, please, enter your name (You are the person who will say the secret number): ")
 guess_name = input("Hi, please, enter your name (You are the person who will guess the secret number): ")
-secret_number = int(input("Input secret number "))
 
+secret_number = int(input("Input secret number "))
 guess_number = int(input("Input guess number "))
+
 attempts = 1
 too_high = secret_number + 10
 too_low = secret_number - 10
