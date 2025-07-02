@@ -9,7 +9,7 @@ too_low = secret_number - 10
 
 while 1 > 0:
     if guess_number == secret_number:
-        print("Congrats {}! You guessed the number in {} attempts.".format(secret_name, attempts))
+        print("Congrats {}! You guessed the number in {} attempts.".format(guess_name, attempts))
         break
 
     attempts += 1
