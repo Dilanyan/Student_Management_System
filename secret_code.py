@@ -14,11 +14,11 @@ while 1 > 0:
 
     attempts += 1
     if guess_number > too_high:
-        print("Too high")
+        print("{}, your number is too high".format(guess_name))
     elif guess_number < too_low:
-        print("Too low")
+        print("{}, your number is too low".format(guess_name))
     else:
-        print("You are soooo close, try again!")
+        print("{}, you are soooo close, try again!".format(guess_name))
 
     guess_number = int(input("Input guess number "))
 
