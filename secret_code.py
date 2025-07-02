@@ -34,7 +34,7 @@ while 1 > 0:
         print("{}, you are soooo close, try again!".format(guess_name))
 
     guess_number = input("Input guess number ")
-    while guess_number.isdigit() == False:
+    while not guess_number.isdigit():
         print("Sorry, ---{}--- is not a number. Try again, please".format(guess_number))
         guess_number = input("Input guess number ")
 
