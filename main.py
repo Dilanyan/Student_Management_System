@@ -5,8 +5,9 @@ while not input_max_student_number.isdigit() or input_max_student_number == "0":
 
 max_student_number = int(input_max_student_number)
 
+students = []
 student_counts = 0
-input_student_or_not = True
+input_student_or_not = ""
 
 while student_counts < max_student_number:
 
@@ -41,6 +42,14 @@ while student_counts < max_student_number:
                 print("Congratulation. The {} {} student pass the exam".format(name, surname))
             else:
                 print("The {} {} fails. Need to hug".format(name, surname))
+
+
+            # Add to list
+            student = f"Student number: {student_counts}, name: {name}, surname: {surname}, age {student_age}, grade: {currentYearGrade}"
+            students.insert(student_counts, student)
+
+
+
         else:
             print(
                 "This  {} {} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ".format(
@@ -50,6 +59,11 @@ while student_counts < max_student_number:
                 print("Congratulation. The {} {} student pass the exam".format(name, surname))
             else:
                 print("The {} {} fails. Need to hug".format(name, surname))
+
+            # Add to list
+            student = f"Student number: {student_counts}, name: {name}, surname: {surname}, age {student_age}, grade: {currentYearGrade}"
+            students.insert(student_counts, student)
+
     else:
         print("Hmmm. There is no issue, for you we have special offers. Call us")
 
@@ -69,7 +83,8 @@ while student_counts < max_student_number:
     if input_student_or_not == 'no':
         break
 
-
+if students:
+    print("----------------{}---------------------------".format(students))
 
 
 
