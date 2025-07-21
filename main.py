@@ -57,7 +57,7 @@ while student_counts < max_student_number:
 
 
             # Add to list
-            students1 = functions.user_data(name, surname, student_age, currentYearGrade, student_counts)
+            students1.update(functions.user_data(name, surname, student_age, currentYearGrade, student_counts))
 
             student = f"Student number: {student_counts}, name: {name}, surname: {surname}, age {student_age}, grade: {currentYearGrade}"
             students.insert(student_counts, student)
@@ -75,7 +75,7 @@ while student_counts < max_student_number:
                 print("The {} {} fails. Need to hug".format(name, surname))
 
             # Add to list
-            students1 = functions.user_data(name, surname, student_age, currentYearGrade, student_counts)
+            students1.update(functions.user_data(name, surname, student_age, currentYearGrade, student_counts))
             student = f"Student number: {student_counts}, name: {name}, surname: {surname}, age {student_age}, grade: {currentYearGrade}"
             students.insert(student_counts, student)
 
