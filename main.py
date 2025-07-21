@@ -58,7 +58,7 @@ while student_counts < max_student_number:
     else:
         print("Hmmm. There is no issue, for you we have special offers. Call us")
 
-    if student_age >= 18:
+    if 18 <= student_age <= 120:
         print(f"{student_counts + 1} student(s) entered so far.")
 
     if student_counts + 1 != max_student_number:
