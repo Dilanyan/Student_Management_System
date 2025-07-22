@@ -6,6 +6,7 @@ max_student_number = functions.input_digit_from_user(input_max_student_number, "
 students = dict()
 student_counts = 0
 input_student_or_not = ""
+input_student_or_not1 = True
 
 while student_counts < max_student_number:
 
@@ -57,6 +58,7 @@ while student_counts < max_student_number:
 
     else:
         print("Hmmm. There is no issue, for you we have special offers. Call us")
+        students.update(functions.user_data(name, surname, student_age, 0, student_counts))
 
     if 18 <= student_age <= 120:
         print(f"{student_counts + 1} student(s) entered so far.")
@@ -76,8 +78,7 @@ while student_counts < max_student_number:
 
     student_counts += 1
 
-if students:
-    print("----------------{}---------------------------".format(students))
+functions.students_print(students)
 
 
 
