@@ -119,8 +119,9 @@ else:
         print("Operation complete.")
 
     for student_id, student_value in students.items():
+        print(student_id)
         print(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
-        sms.input_users_into_file(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
+        sms.input_users_into_file(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_id)
 
 
 
