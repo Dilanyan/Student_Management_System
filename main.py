@@ -1,6 +1,4 @@
-from itertools import count
-
-import functions
+from functions import sms
 import os
 
 students = dict()
@@ -20,20 +18,20 @@ while True:
 if enter_students_manually == "yes":
 
     input_max_student_number = input("Input the maximum number of students: ")
-    max_student_number = functions.input_digit_from_user(input_max_student_number, "Input the maximum number of students")
+    max_student_number = sms.input_digit_from_user(input_max_student_number, "Input the maximum number of students")
 
 
 
     while student_counts < max_student_number:
 
         name = input("Enter student name: ")
-        username = functions.input_username_surename(name, "Enter student name")
+        username = sms.input_username_surename(name, "Enter student name")
 
         surname = input("Enter student surname: ")
-        user_surname = functions.input_username_surename(surname, "Enter student surname")
+        user_surname = sms.input_username_surename(surname, "Enter student surname")
 
         student_age = input("Enter student age (from 18 to 120): ")
-        student_age = functions.input_digit_from_user(student_age, "Enter student age (from 18 to 120)")
+        student_age = sms.input_digit_from_user(student_age, "Enter student age (from 18 to 120)")
 
 
         if student_age < 18:
@@ -43,11 +41,11 @@ if enter_students_manually == "yes":
             print("Now let's to calculate the average grade for previous and current year - ")
 
             currentYearGrade = input("Enter student current year grade. From 1 to 100: ")
-            currentYearGrade = functions.input_digit_from_user(currentYearGrade, "Enter student current year grade. From 1 to 100: ")
+            currentYearGrade = sms.input_digit_from_user(currentYearGrade, "Enter student current year grade. From 1 to 100: ")
 
             if student_age > 18:
                 previousYearGrade = input("Enter student previous year grade. From 1 to 100: ")
-                previousYearGrade = functions.input_digit_from_user(previousYearGrade,"Enter student current year grade. From 1 to 100: ")
+                previousYearGrade = sms.input_digit_from_user(previousYearGrade,"Enter student current year grade. From 1 to 100: ")
 
                 studentGrade = (previousYearGrade + currentYearGrade) / 2
 
@@ -57,8 +55,8 @@ if enter_students_manually == "yes":
                     print("The {} {} fails. Need to hug".format(name, surname))
 
                 # Add to dict
-                students.update(functions.user_data(name, surname, student_age, studentGrade, student_counts))
-                functions.input_users_into_file(name, surname, student_age, studentGrade, student_counts)
+                students.update(sms.user_data(name, surname, student_age, studentGrade, student_counts))
+                sms.input_users_into_file(name, surname, student_age, studentGrade, student_counts)
 
             else:
                 print(
@@ -71,13 +69,13 @@ if enter_students_manually == "yes":
                     print("The {} {} fails. Need to hug".format(name, surname))
 
                 # Add to dict
-                students.update(functions.user_data(name, surname, student_age, currentYearGrade, student_counts))
-                functions.input_users_into_file(name, surname, student_age, currentYearGrade, student_counts)
+                students.update(sms.user_data(name, surname, student_age, currentYearGrade, student_counts))
+                sms.input_users_into_file(name, surname, student_age, currentYearGrade, student_counts)
 
         else:
             print("Hmmm. There is no issue, for you we have special offers. Call us")
-            students.update(functions.user_data(name, surname, student_age, 0, student_counts))
-            functions.input_users_into_file(name, surname, student_age, 0, student_counts)
+            students.update(sms.user_data(name, surname, student_age, 0, student_counts))
+            sms.input_users_into_file(name, surname, student_age, 0, student_counts)
 
         if 18 <= student_age <= 120:
             print(f"{student_counts + 1} student(s) entered so far.")
@@ -97,7 +95,7 @@ if enter_students_manually == "yes":
 
         student_counts += 1
 
-    functions.students_print(students)
+    sms.students_print(students)
 
 
 
@@ -112,7 +110,7 @@ else:
             for user_row in content:
                 one_student_info = user_row.strip().split(' ')
                 studentGrade = (int(one_student_info[3]) + int(one_student_info[4])) / 2
-                students.update(functions.user_data(one_student_info[0], one_student_info[1], one_student_info[2], studentGrade, student_counts))
+                students.update(sms.user_data(one_student_info[0], one_student_info[1], one_student_info[2], studentGrade, student_counts))
                 student_counts += 1
 
     except FileNotFoundError:
@@ -122,7 +120,7 @@ else:
 
     for student_id, student_value in students.items():
         print(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
-        functions.input_users_into_file(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
+        sms.input_users_into_file(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
 
 
 

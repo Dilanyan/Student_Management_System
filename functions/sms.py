@@ -11,7 +11,7 @@ def input_username_surename(name_surname, text=''):
         name_surname = input(f"{text}: ")
     return name_surname.capitalize()
 
-# Store the user data in file/dict
+# Store the user data in dict
 def user_data(user_name, user_surname, user_age, user_grade, user_number):
     user_email = user_name + '.' + user_surname + str(user_number) + '@myschool.armstqb'
     user_exam = "Pass" if user_grade >= 50 else "Fail"
@@ -26,13 +26,13 @@ def user_data(user_name, user_surname, user_age, user_grade, user_number):
         'exam': user_exam
     }}
 
-# Store the user data in file/dict
+# Store the user data in file
 def input_users_into_file(user_name, user_surname, user_age, user_grade, user_number, *args):
     user_email = user_name + '.' + user_surname + str(user_number) + '@myschool.armstqb'
     user_exam = "Pass" if user_grade >= 50 else "Fail"
 
     try:
-        with open("StudentsReport.txt", "a") as file:
+        with open("../StudentsReport.txt", "a") as file:
             file.write(f"Name: {user_name.title()}, Surname: {user_surname.title()}, Age: {user_age}, Grade: {user_grade}, Email: {user_email}, Exam: {user_exam}\n")
     except FileNotFoundError:
         print("The file doesn't exist.")
