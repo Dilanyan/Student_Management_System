@@ -1,9 +1,12 @@
 from functions import sms
+import logging
 import os
 
 students = dict()
 student_counts = 0
 input_student_or_not = ""
+logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
+                    format='%(asctime)s: %(levelname)s: %(message)s')
 
 # Add a new input value that will check if students’ data will be provided manually or from a file
 while True:
@@ -14,6 +17,8 @@ while True:
         break
     else:
         print('Type yes/no')
+        logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
+
 
 if enter_students_manually == "yes":
 
@@ -74,6 +79,7 @@ if enter_students_manually == "yes":
 
         else:
             print("Hmmm. There is no issue, for you we have special offers. Call us")
+            logging.info(f"This user {name, surname, student_age} can be invited to our secret project")
             students.update(sms.user_data(name, surname, student_age, 0, student_counts))
             sms.input_users_into_file(name, surname, student_age, 0, student_counts)
 
