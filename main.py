@@ -17,7 +17,7 @@ while True:
         break
     else:
         print('Type yes/no')
-        logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
+        logging.warning(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
 
 if enter_students_manually == "yes":
@@ -41,6 +41,7 @@ if enter_students_manually == "yes":
 
         if student_age < 18:
             print("Dear {} {} is under 18 so, for now he/she is a primary school student".format(name, surname, student_age))
+            logging.info(f"Input primary school student - {name}, {surname}, {student_age}")
         elif 18 <= student_age <= 120:
             print("Dear {} {} student, is a college student".format(name, surname))
             print("Now let's to calculate the average grade for previous and current year - ")
@@ -62,6 +63,7 @@ if enter_students_manually == "yes":
                 # Add to dict
                 students.update(sms.user_data(name, surname, student_age, studentGrade, student_counts))
                 sms.input_users_into_file(name, surname, student_age, studentGrade, student_counts)
+                logging.info(f"Added a user - {name}, {surname}, {studentGrade}, {name}.{surname}.{student_counts}@myschool.armstqb")
 
             else:
                 print(
@@ -76,10 +78,11 @@ if enter_students_manually == "yes":
                 # Add to dict
                 students.update(sms.user_data(name, surname, student_age, currentYearGrade, student_counts))
                 sms.input_users_into_file(name, surname, student_age, currentYearGrade, student_counts)
+                logging.info(f"Added a user - {name}, {surname}, {currentYearGrade}, {name}.{surname}.{student_counts}@myschool.armstqb")
 
         else:
             print("Hmmm. There is no issue, for you we have special offers. Call us")
-            logging.info(f"This user {name, surname, student_age} can be invited to our secret project")
+            logging.critical(f"This user {name, surname, student_age} can be invited to our secret project")
             students.update(sms.user_data(name, surname, student_age, 0, student_counts))
             sms.input_users_into_file(name, surname, student_age, 0, student_counts)
 
@@ -95,6 +98,7 @@ if enter_students_manually == "yes":
                     break
                 else:
                     print('Type yes/no')
+                    logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
         if input_student_or_not == 'no':
             break
@@ -121,8 +125,10 @@ else:
 
     except FileNotFoundError:
         print("The file doesn't exist.")
+        logging.error(f"The file doesn't exist.")
     finally:
         print("Operation complete.")
+        logging.info(f"Operation complete.")
 
     for student_id, student_value in students.items():
         print(student_id)
