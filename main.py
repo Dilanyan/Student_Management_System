@@ -1,10 +1,13 @@
 from functions import sms
 import logging
 import os
+import student
+from helper import Helper
 
 students = dict()
 student_counts = 0
 input_student_or_not = ""
+input_student_or_not1 = True
 logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
                     format='%(asctime)s: %(levelname)s: %(message)s')
 
@@ -23,20 +26,20 @@ while True:
 if enter_students_manually == "yes":
 
     input_max_student_number = input("Input the maximum number of students: ")
-    max_student_number = sms.input_digit_from_user(input_max_student_number, "Input the maximum number of students")
+    max_student_number = Helper.input_digit_from_user(input_max_student_number, "Input the maximum number of students")
 
 
 
     while student_counts < max_student_number:
 
         name = input("Enter student name: ")
-        username = sms.input_username_surename(name, "Enter student name")
+        username = Helper.input_username_surname(name, "Enter student name")
 
         surname = input("Enter student surname: ")
-        user_surname = sms.input_username_surename(surname, "Enter student surname")
+        user_surname = Helper.input_username_surname(surname, "Enter student surname")
 
         student_age = input("Enter student age (from 18 to 120): ")
-        student_age = sms.input_digit_from_user(student_age, "Enter student age (from 18 to 120)")
+        student_age = Helper.input_digit_from_user(student_age, "Enter student age (from 18 to 120)")
 
 
         if student_age < 18:
