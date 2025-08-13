@@ -6,8 +6,7 @@ from helper import Helper
 
 students = dict()
 student_counts = 1
-input_student_or_not = ""
-input_student_or_not1 = False
+input_student_or_not = False
 logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
                     format='%(asctime)s: %(levelname)s: %(message)s')
 
@@ -30,7 +29,7 @@ if enter_students_manually == "yes":
 
 
 
-    while student_counts <= max_student_number and not input_student_or_not1:
+    while student_counts <= max_student_number and not input_student_or_not:
 
         name = input("Enter student name: ")
         username = Helper.input_username_surname(name, "Enter student name")
@@ -97,9 +96,9 @@ if enter_students_manually == "yes":
         if student_counts <= max_student_number:
             continue_input_user = input('Continue to input a student? yes/no: ')
             if continue_input_user.lower() == 'yes':
-                input_student_or_not1 = False
+                input_student_or_not = False
             elif continue_input_user.lower() == 'no':
-                input_student_or_not1 = True
+                input_student_or_not = True
             else:
                 print('Type yes/no')
                 logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
