@@ -5,9 +5,9 @@ import student
 from helper import Helper
 
 students = dict()
-student_counts = 0
+student_counts = 1
 input_student_or_not = ""
-input_student_or_not1 = True
+input_student_or_not1 = False
 logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
                     format='%(asctime)s: %(levelname)s: %(message)s')
 
@@ -30,7 +30,7 @@ if enter_students_manually == "yes":
 
 
 
-    while student_counts < max_student_number:
+    while student_counts <= max_student_number and not input_student_or_not1:
 
         name = input("Enter student name: ")
         username = Helper.input_username_surname(name, "Enter student name")
@@ -50,11 +50,11 @@ if enter_students_manually == "yes":
             print("Now let's to calculate the average grade for previous and current year - ")
 
             currentYearGrade = input("Enter student current year grade. From 1 to 100: ")
-            currentYearGrade = sms.input_digit_from_user(currentYearGrade, "Enter student current year grade. From 1 to 100: ")
+            currentYearGrade = Helper.input_digit_from_user(currentYearGrade, "Enter student current year grade. From 1 to 100: ")
 
             if student_age > 18:
                 previousYearGrade = input("Enter student previous year grade. From 1 to 100: ")
-                previousYearGrade = sms.input_digit_from_user(previousYearGrade,"Enter student current year grade. From 1 to 100: ")
+                previousYearGrade = Helper.input_digit_from_user(previousYearGrade,"Enter student current year grade. From 1 to 100: ")
 
                 studentGrade = (previousYearGrade + currentYearGrade) / 2
 
@@ -83,34 +83,28 @@ if enter_students_manually == "yes":
                 sms.input_users_into_file(name, surname, student_age, currentYearGrade, student_counts)
                 logging.info(f"Added a user - {name}, {surname}, {currentYearGrade}, {name}.{surname}.{student_counts}@myschool.armstqb")
 
+            # Count user after adding to our college
+            print(f"{student_counts} student(s) entered so far.")
+            student_counts += 1
+
         else:
             print("Hmmm. There is no issue, for you we have special offers. Call us")
             logging.critical(f"This user {name, surname, student_age} can be invited to our secret project")
             students.update(sms.user_data(name, surname, student_age, 0, student_counts))
             sms.input_users_into_file(name, surname, student_age, 0, student_counts)
 
-        if 18 <= student_age <= 120:
-            print(f"{student_counts + 1} student(s) entered so far.")
 
-        if student_counts + 1 != max_student_number:
-            while student_counts < max_student_number:
-                input_student_or_not = input('Continue to input a student? yes/no: ')
-                if input_student_or_not.lower() == 'yes':
-                    break
-                elif input_student_or_not.lower() == 'no':
-                    break
-                else:
-                    print('Type yes/no')
-                    logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
-
-        if input_student_or_not == 'no':
-            break
-
-        student_counts += 1
+        if student_counts <= max_student_number:
+            continue_input_user = input('Continue to input a student? yes/no: ')
+            if continue_input_user.lower() == 'yes':
+                input_student_or_not1 = False
+            elif continue_input_user.lower() == 'no':
+                input_student_or_not1 = True
+            else:
+                print('Type yes/no')
+                logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
     sms.students_print(students)
-
-
 
 
 else:
