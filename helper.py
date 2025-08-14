@@ -11,17 +11,24 @@ class Helper:
     """
     # This method checks if a user inputs a digit then return int
     @staticmethod
-    def input_digit_from_user(inpt_text, field_text=''):
-        while not inpt_text.isdigit() or inpt_text == "0":
+    def input_digit_from_user(field_text=''):
+        while True:
             inpt_text = input(f"{field_text}: ")
+            if not inpt_text.isdigit() or inpt_text == "0":
+                print("Invalid number.")
+            else:
+                break
         return int(inpt_text)
 
     # This method for name and surname the input text will be cleared from numbers and other characters
     @staticmethod
-    def input_username_surname(input_text, field_text=''):
+    def input_username_surname(field_text = ''):
         reg_patt = r"^[A-Za-z]+(?:[-' ][A-Za-z]+)*$"
-        is_this_valid_name = False if re.findall(reg_patt, input_text) else True
-
-        while is_this_valid_name:
+        while True:
             input_text = input(f"{field_text}: ")
+            if re.findall(reg_patt, input_text):
+                print(f"Good name, {input_text}!")
+                break
+            else:
+                print("Invalid name.")
         return input_text.capitalize()

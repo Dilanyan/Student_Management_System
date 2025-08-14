@@ -24,22 +24,13 @@ while True:
 
 if enter_students_manually == "yes":
 
-    input_max_student_number = input("Input the maximum number of students: ")
-    max_student_number = Helper.input_digit_from_user(input_max_student_number, "Input the maximum number of students")
-
-
+    max_student_number = Helper.input_digit_from_user("Input the maximum number of students")
 
     while student_counts <= max_student_number and not input_student_or_not:
 
-        name = input("Enter student name: ")
-        username = Helper.input_username_surname(name, "Enter student name")
-
-        surname = input("Enter student surname: ")
-        user_surname = Helper.input_username_surname(surname, "Enter student surname")
-
-        student_age = input("Enter student age (from 18 to 120): ")
-        student_age = Helper.input_digit_from_user(student_age, "Enter student age (from 18 to 120)")
-
+        name = Helper.input_username_surname("Enter student name")
+        surname = Helper.input_username_surname("Enter student surname")
+        student_age = Helper.input_digit_from_user("Enter student age (from 18 to 120)")
 
         if student_age < 18:
             print("Dear {} {} is under 18 so, for now he/she is a primary school student".format(name, surname, student_age))
@@ -48,12 +39,10 @@ if enter_students_manually == "yes":
             print("Dear {} {} student, is a college student".format(name, surname))
             print("Now let's to calculate the average grade for previous and current year - ")
 
-            currentYearGrade = input("Enter student current year grade. From 1 to 100: ")
-            currentYearGrade = Helper.input_digit_from_user(currentYearGrade, "Enter student current year grade. From 1 to 100: ")
+            currentYearGrade = Helper.input_digit_from_user("Enter student current year grade. From 1 to 100: ")
 
             if student_age > 18:
-                previousYearGrade = input("Enter student previous year grade. From 1 to 100: ")
-                previousYearGrade = Helper.input_digit_from_user(previousYearGrade,"Enter student current year grade. From 1 to 100: ")
+                previousYearGrade = Helper.input_digit_from_user("Enter student previous year grade. From 1 to 100: ")
 
                 studentGrade = (previousYearGrade + currentYearGrade) / 2
 
