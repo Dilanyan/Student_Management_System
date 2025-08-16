@@ -32,3 +32,14 @@ class Helper:
             else:
                 print("Invalid name.")
         return input_text.capitalize()
+
+    @staticmethod
+    # Store the user data in file
+    def input_users_into_file(student_instance):
+        try:
+            with open("C:\\Users\\Narek\\PycharmProjects\\Student_Management_System\\StudentsReport.txt", "a") as file:
+                file.write(str(student_instance))
+        except FileNotFoundError:
+            print("The file doesn't exist.")
+        finally:
+            print("Operation complete.")

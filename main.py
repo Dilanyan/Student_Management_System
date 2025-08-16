@@ -1,11 +1,10 @@
-from functions import sms
 import logging
 import os
-import student
+from student import Student
 from helper import Helper
 
-students = dict()
 student_counts = 1
+student_object_list = list()
 input_student_or_not = False
 logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
                     format='%(asctime)s: %(levelname)s: %(message)s')
@@ -33,43 +32,27 @@ if enter_students_manually == "yes":
         student_age = Helper.input_digit_from_user("Enter student age (from 18 to 120)")
 
         if student_age < 18:
-            print("Dear {} {} is under 18 so, for now he/she is a primary school student".format(name, surname, student_age))
-            logging.info(f"Input primary school student - {name}, {surname}, {student_age}")
-        elif 18 <= student_age <= 120:
-            print("Dear {} {} student, is a college student".format(name, surname))
-            print("Now let's to calculate the average grade for previous and current year - ")
+            print(f"Dear {name} {surname} is under 18 so, for now he/she is a primary school student")
+            logging.info(f"This {name} {surname} student wants us, so call back or send invitation when he turns 18")
 
-            currentYearGrade = Helper.input_digit_from_user("Enter student current year grade. From 1 to 100: ")
+        elif 18 <= student_age <= 120:
+            print(f"Dear {name} {surname} student, is a college student. Now let's to calculate the average grade")
+
+            currentYearGrade = Helper.input_digit_from_user("Enter student current year grade. From 1 to 100")
 
             if student_age > 18:
-                previousYearGrade = Helper.input_digit_from_user("Enter student previous year grade. From 1 to 100: ")
+                previousYearGrade = Helper.input_digit_from_user("Enter student previous year grade. From 1 to 100")
 
-                studentGrade = (previousYearGrade + currentYearGrade) / 2
+                # First put the student object into list
+                student_object_list.insert(student_counts-1, Student(name, surname, student_age, currentYearGrade, student_counts, previousYearGrade))
 
-                if studentGrade >= 50:
-                    print("Congratulation. The {} {} student pass the exam".format(name, surname))
-                else:
-                    print("The {} {} fails. Need to hug".format(name, surname))
-
-                # Add to dict
-                students.update(sms.user_data(name, surname, student_age, studentGrade, student_counts))
-                sms.input_users_into_file(name, surname, student_age, studentGrade, student_counts)
-                logging.info(f"Added a user - {name}, {surname}, {studentGrade}, {name}.{surname}.{student_counts}@myschool.armstqb")
+                # We can print the exam result if we want
+                print(f"{student_object_list[student_counts-1].pass_fail_exam()}")
 
             else:
-                print(
-                    "This  {} {} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ".format(
-                        name, surname))
-
-                if currentYearGrade >= 50:
-                    print("Congratulation. The {} {} student pass the exam".format(name, surname))
-                else:
-                    print("The {} {} fails. Need to hug".format(name, surname))
-
-                # Add to dict
-                students.update(sms.user_data(name, surname, student_age, currentYearGrade, student_counts))
-                sms.input_users_into_file(name, surname, student_age, currentYearGrade, student_counts)
-                logging.info(f"Added a user - {name}, {surname}, {currentYearGrade}, {name}.{surname}.{student_counts}@myschool.armstqb")
+                print(f"This {name} {surname} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ")
+                # First put the student object into list
+                student_object_list.insert(student_counts - 1,Student(name, surname, student_age, currentYearGrade, student_counts))
 
             # Count user after adding to our college
             print(f"{student_counts} student(s) entered so far.")
@@ -78,8 +61,6 @@ if enter_students_manually == "yes":
         else:
             print("Hmmm. There is no issue, for you we have special offers. Call us")
             logging.critical(f"This user {name, surname, student_age} can be invited to our secret project")
-            students.update(sms.user_data(name, surname, student_age, 0, student_counts))
-            sms.input_users_into_file(name, surname, student_age, 0, student_counts)
 
 
         if student_counts <= max_student_number:
@@ -92,7 +73,8 @@ if enter_students_manually == "yes":
                 print('Type yes/no')
                 logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
-    sms.students_print(students)
+    Helper.input_users_into_file(student_object_list)
+    logging.info(student_object_list)
 
 
 else:
@@ -114,11 +96,6 @@ else:
     finally:
         print("Operation complete.")
         logging.info(f"Operation complete.")
-
-    for student_id, student_value in students.items():
-        print(student_id)
-        print(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_value['email'], student_value['exam'])
-        sms.input_users_into_file(student_value['name'], student_value['surname'], student_value['age'], student_value['grade'], student_id)
 
 
 
