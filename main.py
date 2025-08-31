@@ -1,6 +1,7 @@
 import logging
 import os
 from student import Student
+from teacher import Teacher
 from helper import Helper
 
 student_counts = 1
@@ -87,7 +88,7 @@ else:
             for user_row in content:
                 one_student_info = user_row.strip().split(' ')
                 studentGrade = (int(one_student_info[3]) + int(one_student_info[4])) / 2
-                students.update(sms.user_data(one_student_info[0], one_student_info[1], one_student_info[2], studentGrade, student_counts))
+                student_object_list.insert(student_counts - 1, Student(one_student_info[0], one_student_info[1], one_student_info[2], studentGrade, student_counts))
                 student_counts += 1
 
     except FileNotFoundError:
@@ -98,7 +99,24 @@ else:
         logging.info(f"Operation complete.")
 
 
+# A small cod which will demonstrate polymorphism
+# We will store objects - student and teacher in the list
 
+# Empty List
+teachers_students_list = list()
+
+# Students
+another_student1 = Student("Ali", "Baba", 40, 1000000)
+
+# Teachers
+another_teacher1 = Teacher("George", "Washington", 337, "United States UX/UI Designer")
+
+# Now we will put them into list then call the introduce function from each class (teacher, student)
+
+teachers_students_list.append(another_teacher1)
+teachers_students_list.append(another_student1)
+Teacher.introduce(teachers_students_list[0])
+Student.introduce(teachers_students_list[1])
 
 
 
