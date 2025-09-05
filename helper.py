@@ -43,3 +43,8 @@ class Helper:
             print("The file doesn't exist.")
         finally:
             print("Operation complete.")
+
+    @staticmethod
+    def student_grade(current_year_grade, previous_year_grade = 0):
+        grade = (previous_year_grade + current_year_grade) / 2 if previous_year_grade else current_year_grade
+        return grade
