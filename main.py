@@ -31,6 +31,7 @@ if enter_students_manually == "yes":
         name = Helper.input_username_surname("Enter student name")
         surname = Helper.input_username_surname("Enter student surname")
         student_age = Helper.input_digit_from_user("Enter student age (from 18 to 120)")
+        student_offline_lessons_time = Helper.input_digit_from_user("Enter student offline lessons time")
 
         if student_age < 18:
             print(f"Dear {name} {surname} is under 18 so, for now he/she is a primary school student")
@@ -43,17 +44,15 @@ if enter_students_manually == "yes":
 
             if student_age > 18:
                 previousYearGrade = Helper.input_digit_from_user("Enter student previous year grade. From 1 to 100")
-
-                # First put the student object into list
-                student_object_list.insert(student_counts-1, Student(name, surname, student_age, currentYearGrade, student_counts, previousYearGrade))
-
-                # We can print the exam result if we want
-                print(f"{student_object_list[student_counts-1].pass_fail_exam()}")
+                grade = Helper.student_grade(currentYearGrade, previousYearGrade)
 
             else:
                 print(f"This {name} {surname} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ")
-                # First put the student object into list
-                student_object_list.insert(student_counts - 1,Student(name, surname, student_age, currentYearGrade, student_counts))
+                grade = Helper.student_grade(currentYearGrade)
+
+
+            student_object_list.append(Student(name, surname, student_age, grade, student_offline_lessons_time, student_counts))
+
 
             # Count user after adding to our college
             print(f"{student_counts} student(s) entered so far.")
@@ -117,6 +116,22 @@ teachers_students_list.append(another_teacher1)
 teachers_students_list.append(another_student1)
 Teacher.introduce(teachers_students_list[0])
 Student.introduce(teachers_students_list[1])
+
+print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+while True:
+    enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
+    if enter_students_offline_lessons_time.lower() == 'yes':
+        break
+    elif enter_students_offline_lessons_time.lower() == 'no':
+        break
+    else:
+        print('Type yes/no')
+
+if enter_students_offline_lessons_time == "yes":
+    enter_student_id = Helper.input_digit_from_user("Enter the student number")
+    add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
+    new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
+    print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
 
 
 
