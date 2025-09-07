@@ -14,7 +14,7 @@ class Helper:
     def input_digit_from_user(field_text=''):
         while True:
             inpt_text = input(f"{field_text}: ")
-            if not inpt_text.isdigit() or inpt_text == "0":
+            if not inpt_text.isdigit():
                 print("Invalid number.")
             else:
                 break

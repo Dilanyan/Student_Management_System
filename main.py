@@ -1,5 +1,7 @@
 import logging
 import os
+
+from hybridstudent import HybridStudent
 from student import Student
 from teacher import Teacher
 from helper import Helper
@@ -31,13 +33,14 @@ if enter_students_manually == "yes":
         name = Helper.input_username_surname("Enter student name")
         surname = Helper.input_username_surname("Enter student surname")
         student_age = Helper.input_digit_from_user("Enter student age (from 18 to 120)")
-        student_offline_lessons_time = Helper.input_digit_from_user("Enter student offline lessons time")
 
         if student_age < 18:
             print(f"Dear {name} {surname} is under 18 so, for now he/she is a primary school student")
             logging.info(f"This {name} {surname} student wants us, so call back or send invitation when he turns 18")
 
         elif 18 <= student_age <= 120:
+            student_offline_lessons_time = Helper.input_digit_from_user("Enter student offline lessons time")
+            student_online_lessons_time = Helper.input_digit_from_user("Enter student online lessons time")
             print(f"Dear {name} {surname} student, is a college student. Now let's to calculate the average grade")
 
             currentYearGrade = Helper.input_digit_from_user("Enter student current year grade. From 1 to 100")
@@ -50,8 +53,7 @@ if enter_students_manually == "yes":
                 print(f"This {name} {surname} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ")
                 grade = Helper.student_grade(currentYearGrade)
 
-
-            student_object_list.append(Student(name, surname, student_age, grade, student_offline_lessons_time, student_counts))
+            student_object_list.append(HybridStudent(name, surname, student_age, grade, student_offline_lessons_time, student_counts, student_online_lessons_time))
 
 
             # Count user after adding to our college
@@ -97,15 +99,59 @@ else:
         print("Operation complete.")
         logging.info(f"Operation complete.")
 
+if student_object_list:
+    # Enter students offline lessons time
+    while True:
+        enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
+        if enter_students_offline_lessons_time.lower() == 'yes':
+            break
+        elif enter_students_offline_lessons_time.lower() == 'no':
+            break
+        else:
+            print('Type yes/no')
 
-# A small cod which will demonstrate polymorphism
+    if enter_students_offline_lessons_time == "yes":
+        print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+        enter_student_id = Helper.input_digit_from_user("Enter the student number")
+        add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
+        new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
+        print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
+
+    # Enter students online lessons time
+    while True:
+        enter_students_online_lessons_time = input("Do you want to add the online lessons time for a student ? yes/no: ")
+        if enter_students_online_lessons_time.lower() == 'yes':
+            break
+        elif enter_students_online_lessons_time.lower() == 'no':
+            break
+        else:
+            print('Type yes/no')
+
+    if enter_students_online_lessons_time == "yes":
+        print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+        enter_student_id = Helper.input_digit_from_user("Enter the student number")
+        add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
+        new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
+        print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
+
+    print(f"The total student lessons time is - {student_object_list[].get_total_lessons_time()}")
+
+
+
+
+
+
+
+
+print("-------------------------------------------  ##  -----------------------------------------")
+# A small code which will demonstrate polymorphism partially overriding then
 # We will store objects - student and teacher in the list
 
 # Empty List
 teachers_students_list = list()
 
 # Students
-another_student1 = Student("Ali", "Baba", 40, 1000000)
+another_student1 = Student("Ali", "Baba", 40, 1000000, 0, 0)
 
 # Teachers
 another_teacher1 = Teacher("George", "Washington", 337, "United States UX/UI Designer")
@@ -116,24 +162,4 @@ teachers_students_list.append(another_teacher1)
 teachers_students_list.append(another_student1)
 Teacher.introduce(teachers_students_list[0])
 Student.introduce(teachers_students_list[1])
-
-print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
-while True:
-    enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
-    if enter_students_offline_lessons_time.lower() == 'yes':
-        break
-    elif enter_students_offline_lessons_time.lower() == 'no':
-        break
-    else:
-        print('Type yes/no')
-
-if enter_students_offline_lessons_time == "yes":
-    enter_student_id = Helper.input_digit_from_user("Enter the student number")
-    add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
-    new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
-    print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
-
-
-
-
-
+print("-------------------------------------------  ##  -----------------------------------------")
