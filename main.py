@@ -5,6 +5,7 @@ from hybridstudent import HybridStudent
 from student import Student
 from teacher import Teacher
 from helper import Helper
+import requests
 
 student_counts = 1
 student_object_list = list()
@@ -116,6 +117,7 @@ if student_object_list:
         add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
         new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
         print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
+        print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
 
     # Enter students online lessons time
     while True:
@@ -133,8 +135,7 @@ if student_object_list:
         add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
         new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
         print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
-
-    print(f"The total student lessons time is - {student_object_list[].get_total_lessons_time()}")
+        print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
 
 
 
@@ -163,3 +164,30 @@ teachers_students_list.append(another_student1)
 Teacher.introduce(teachers_students_list[0])
 Student.introduce(teachers_students_list[1])
 print("-------------------------------------------  ##  -----------------------------------------")
+
+
+
+url = "https://postman-echo.com/get"
+params = {
+    "foo": "bar",
+    "test": "123"
+}
+response = requests.get(url, params=params)
+print("Status Code:", response.status_code)
+print("Response JSON:", response.json())
+
+
+url = "https://postman-echo.com/post"
+
+# Data to send in the POST request
+data = {
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+}
+
+# Sending POST request
+response = requests.post(url, json=data)
+
+# Print the response
+print("Status Code:", response.status_code)
+print("Response JSON:", response.json())
