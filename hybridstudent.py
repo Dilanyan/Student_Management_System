@@ -8,7 +8,6 @@ class HybridStudent(Student):
         return self._online_lessons_time
 
     def set_online_lessons_time(self, new_online_lessons_time):
-        print(f"{self._online_lessons_time} + {new_online_lessons_time}")
         self._online_lessons_time += new_online_lessons_time
         return self._online_lessons_time
 
