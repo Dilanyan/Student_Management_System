@@ -8,6 +8,7 @@ from helper import Helper
 import requests
 
 student_counts = 1
+continue_input_user = ""
 student_object_list = list()
 input_student_or_not = False
 logging.basicConfig(filename='sms_logging.log', level=logging.INFO,
@@ -54,7 +55,7 @@ if enter_students_manually == "yes":
                 print(f"This {name} {surname} student is only 18 year old, obviously he hasn't previous year grade. So calculating the current year grade ")
                 grade = Helper.student_grade(currentYearGrade)
 
-            student_object_list.append(HybridStudent(name, surname, student_age, grade, student_offline_lessons_time, student_counts, student_online_lessons_time))
+            student_object_list.append(HybridStudent(name, surname, student_age, grade, student_offline_lessons_time, student_online_lessons_time))
 
 
             # Count user after adding to our college
@@ -76,8 +77,57 @@ if enter_students_manually == "yes":
                 print('Type yes/no')
                 logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
-    Helper.input_users_into_file(student_object_list)
-    logging.info(student_object_list)
+    if student_object_list:
+        # Enter students offline lessons time
+        while True:
+            enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
+            if enter_students_offline_lessons_time.lower() == 'yes':
+                break
+            elif enter_students_offline_lessons_time.lower() == 'no':
+                break
+            else:
+                print('Type yes/no')
+
+        if enter_students_offline_lessons_time == "yes":
+            print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+            enter_student_id = Helper.input_digit_from_user("Enter the student number")
+            add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
+            new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
+            print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
+            print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
+
+        # Enter students online lessons time
+        while True:
+            enter_students_online_lessons_time = input("Do you want to add the online lessons time for a student ? yes/no: ")
+            if enter_students_online_lessons_time.lower() == 'yes':
+                break
+            elif enter_students_online_lessons_time.lower() == 'no':
+                break
+            else:
+                print('Type yes/no')
+
+        if enter_students_online_lessons_time == "yes":
+            print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+            enter_student_id = Helper.input_digit_from_user("Enter the student number")
+            add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
+            new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
+            print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
+            print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
+
+    for student_object in student_object_list:
+        print("------------- Students list: ---------")
+        print(student_object.get_grade())
+        print(student_object.get_name())
+        print(student_object.get_surname())
+        print(student_object.get_age())
+        print(student_object.get_pass_fail_exam())
+        print(student_object.get_offline_lessons_time())
+        print(student_object.get_online_lessons_time())
+        print(Helper.e_mmail(student_object.get_name(), student_object.get_surname(), hash(student_object)))
+        print("------------- End students list: ---------")
+
+        Helper.input_users_into_file(student_object_list)
+        # logging.info(student_object_list)
 
 
 else:
@@ -100,43 +150,6 @@ else:
         print("Operation complete.")
         logging.info(f"Operation complete.")
 
-if student_object_list:
-    # Enter students offline lessons time
-    while True:
-        enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
-        if enter_students_offline_lessons_time.lower() == 'yes':
-            break
-        elif enter_students_offline_lessons_time.lower() == 'no':
-            break
-        else:
-            print('Type yes/no')
-
-    if enter_students_offline_lessons_time == "yes":
-        print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
-        enter_student_id = Helper.input_digit_from_user("Enter the student number")
-        add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
-        new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
-        print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
-        print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
-
-    # Enter students online lessons time
-    while True:
-        enter_students_online_lessons_time = input("Do you want to add the online lessons time for a student ? yes/no: ")
-        if enter_students_online_lessons_time.lower() == 'yes':
-            break
-        elif enter_students_online_lessons_time.lower() == 'no':
-            break
-        else:
-            print('Type yes/no')
-
-    if enter_students_online_lessons_time == "yes":
-        print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
-        enter_student_id = Helper.input_digit_from_user("Enter the student number")
-        add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
-        new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
-        print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
-        print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
-
 
 
 
@@ -152,7 +165,7 @@ print("-------------------------------------------  ##  ------------------------
 teachers_students_list = list()
 
 # Students
-another_student1 = Student("Ali", "Baba", 40, 1000000, 0, 0)
+another_student1 = Student("Ali", "Baba", 40, 1000000, 0)
 
 # Teachers
 another_teacher1 = Teacher("George", "Washington", 337, "United States UX/UI Designer")

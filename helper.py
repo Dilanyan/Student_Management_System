@@ -48,3 +48,8 @@ class Helper:
     def student_grade(current_year_grade, previous_year_grade = 0):
         grade = (previous_year_grade + current_year_grade) / 2 if previous_year_grade else current_year_grade
         return grade
+
+    @staticmethod
+    def e_mmail(name, surname, number):
+        email = name + "." + surname + "." + str(number) + "@myschool.armstqb"
+        return email
