@@ -39,7 +39,7 @@ class Helper:
     def input_users_into_file(student_object_list):
         try:
             with open("C:\\Users\\Narek\\PycharmProjects\\Student_Management_System\\StudentsReport.json", "a") as file:
-                # student = []
+                students_list = []
                 for student_object in student_object_list:
                     item = {
                               "id": hash(student_object),
@@ -51,12 +51,10 @@ class Helper:
                               "exam_result": student_object.get_pass_fail_exam(),
                               "offline_lessons_time": student_object.get_offline_lessons_time(),
                               "online_lessons_time": student_object.get_online_lessons_time(),
-                            },
-                    # student.append(item)
-
-                students = {"student": item}
+                            }
+                    students_list.append(item)
+                students = {"student": students_list}
                 json.dump(students, file, indent=4)
-                #file.write(json.dumps(students))
         except FileNotFoundError:
             print("The file doesn't exist.")
         finally:
