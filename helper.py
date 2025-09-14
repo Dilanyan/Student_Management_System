@@ -1,4 +1,5 @@
 import re
+import json
 
 class Helper:
     """
@@ -35,10 +36,27 @@ class Helper:
 
     @staticmethod
     # Store the user data in file
-    def input_users_into_file(student_instance):
+    def input_users_into_file(student_object_list):
         try:
-            with open("C:\\Users\\Narek\\PycharmProjects\\Student_Management_System\\StudentsReport.txt", "a") as file:
-                file.write(str(student_instance))
+            with open("C:\\Users\\Narek\\PycharmProjects\\Student_Management_System\\StudentsReport.json", "a") as file:
+                # student = []
+                for student_object in student_object_list:
+                    item = {
+                              "id": hash(student_object),
+                              "name": student_object.get_name(),
+                              "surname": student_object.get_surname(),
+                              "age": student_object.get_age(),
+                              "email": Helper.e_mmail(student_object.get_name(), student_object.get_surname(), hash(student_object)),
+                              "grade": student_object.get_grade(),
+                              "exam_result": student_object.get_pass_fail_exam(),
+                              "offline_lessons_time": student_object.get_offline_lessons_time(),
+                              "online_lessons_time": student_object.get_online_lessons_time(),
+                            },
+                    # student.append(item)
+
+                students = {"student": item}
+                json.dump(students, file, indent=4)
+                #file.write(json.dumps(students))
         except FileNotFoundError:
             print("The file doesn't exist.")
         finally:
@@ -53,3 +71,17 @@ class Helper:
     def e_mmail(name, surname, number):
         email = name + "." + surname + "." + str(number) + "@myschool.armstqb"
         return email
+
+    @staticmethod
+    # Neat print of student's data
+    def students_print(student_object_list):
+        for student_object in student_object_list:
+            print(student_object.get_name())
+            print(student_object.get_surname())
+            print(student_object.get_age())
+            print(Helper.e_mmail(student_object.get_name(), student_object.get_surname(), hash(student_object)))
+            print(student_object.get_grade())
+            print(student_object.get_pass_fail_exam())
+            print(student_object.get_offline_lessons_time())
+            print(student_object.get_online_lessons_time())
+            print("------------------------------")

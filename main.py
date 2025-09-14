@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 
@@ -5,7 +6,6 @@ from hybridstudent import HybridStudent
 from student import Student
 from teacher import Teacher
 from helper import Helper
-import requests
 
 student_counts = 1
 continue_input_user = ""
@@ -114,34 +114,32 @@ if enter_students_manually == "yes":
             print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
             print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
 
-    for student_object in student_object_list:
-        print("------------- Students list: ---------")
-        print(student_object.get_grade())
-        print(student_object.get_name())
-        print(student_object.get_surname())
-        print(student_object.get_age())
-        print(student_object.get_pass_fail_exam())
-        print(student_object.get_offline_lessons_time())
-        print(student_object.get_online_lessons_time())
-        print(Helper.e_mmail(student_object.get_name(), student_object.get_surname(), hash(student_object)))
-        print("------------- End students list: ---------")
 
+
+        Helper.students_print(student_object_list)
         Helper.input_users_into_file(student_object_list)
-        # logging.info(student_object_list)
+        logging.info(student_object_list)
 
 
 else:
+
+
     # Input students form StudentsList.txt file to StudentsReport.txt file
-    file_path_name = input("Input the “StudentsList.txt” file path (Like C:\\Users\\'username'\\Downloads or C:\\Users\\username\\Documents): ")
+    file_path_name = input("Input the “StudentsList.json” file path (Like C:\\Users\\'username'\\Downloads or C:\\Users\\username\\Documents): ")
     os.chdir(file_path_name)
     try:
-        with open("StudentsList.txt", "r") as file:
-            content = file.readlines()
-            for user_row in content:
-                one_student_info = user_row.strip().split(' ')
-                studentGrade = (int(one_student_info[3]) + int(one_student_info[4])) / 2
-                student_object_list.insert(student_counts - 1, Student(one_student_info[0], one_student_info[1], one_student_info[2], studentGrade, student_counts))
-                student_counts += 1
+        with open("StudentsList.json", "r") as file:
+
+            students_data = json.load(file)
+
+        for student_main_key_is_dict, student_main_value_is_list in students_data.items():
+            print(f"{student_main_key_is_dict} >>> [")
+
+            for student_dict in student_main_value_is_list:
+                for student_info_key, student__info_value in student_dict.items():
+                    print(f"{student_info_key.title()}: {student__info_value}")
+
+            print("]")
 
     except FileNotFoundError:
         print("The file doesn't exist.")
@@ -178,29 +176,3 @@ Teacher.introduce(teachers_students_list[0])
 Student.introduce(teachers_students_list[1])
 print("-------------------------------------------  ##  -----------------------------------------")
 
-
-
-url = "https://postman-echo.com/get"
-params = {
-    "foo": "bar",
-    "test": "123"
-}
-response = requests.get(url, params=params)
-print("Status Code:", response.status_code)
-print("Response JSON:", response.json())
-
-
-url = "https://postman-echo.com/post"
-
-# Data to send in the POST request
-data = {
-    "name": "John Doe",
-    "email": "john.doe@example.com"
-}
-
-# Sending POST request
-response = requests.post(url, json=data)
-
-# Print the response
-print("Status Code:", response.status_code)
-print("Response JSON:", response.json())
