@@ -77,70 +77,57 @@ if enter_students_manually == "yes":
                 print('Type yes/no')
                 logging.info(f"Typed - {enter_students_manually}. Need to type - yes OR no")
 
-    if student_object_list:
-        # Enter students offline lessons time
-        while True:
-            enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
-            if enter_students_offline_lessons_time.lower() == 'yes':
-                break
-            elif enter_students_offline_lessons_time.lower() == 'no':
-                break
-            else:
-                print('Type yes/no')
+    # if student_object_list:
+    #     # Enter students offline lessons time
+    #     while True:
+    #         enter_students_offline_lessons_time = input("Do you want to add the offline lessons time for a student ? yes/no: ")
+    #         if enter_students_offline_lessons_time.lower() == 'yes':
+    #             break
+    #         elif enter_students_offline_lessons_time.lower() == 'no':
+    #             break
+    #         else:
+    #             print('Type yes/no')
+    #
+    #     if enter_students_offline_lessons_time == "yes":
+    #         print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+    #         enter_student_id = Helper.input_digit_from_user("Enter the student number")
+    #         add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
+    #         new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
+    #         print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
+    #         print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
+    #
+    #     # Enter students online lessons time
+    #     while True:
+    #         enter_students_online_lessons_time = input("Do you want to add the online lessons time for a student ? yes/no: ")
+    #         if enter_students_online_lessons_time.lower() == 'yes':
+    #             break
+    #         elif enter_students_online_lessons_time.lower() == 'no':
+    #             break
+    #         else:
+    #             print('Type yes/no')
+    #
+    #     if enter_students_online_lessons_time == "yes":
+    #         print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
+    #         enter_student_id = Helper.input_digit_from_user("Enter the student number")
+    #         add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
+    #         new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
+    #         print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
+    #         print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
 
-        if enter_students_offline_lessons_time == "yes":
-            print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
-            enter_student_id = Helper.input_digit_from_user("Enter the student number")
-            add_student_offline_lessons_time = Helper.input_digit_from_user("Add the student offline lessons time")
-            new_offline_lessons_time = student_object_list[enter_student_id].set_offline_lessons_time(add_student_offline_lessons_time)
-            print(f" The student's offline lessons time {student_object_list[enter_student_id].get_offline_lessons_time()}")
-            print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
 
-        # Enter students online lessons time
-        while True:
-            enter_students_online_lessons_time = input("Do you want to add the online lessons time for a student ? yes/no: ")
-            if enter_students_online_lessons_time.lower() == 'yes':
-                break
-            elif enter_students_online_lessons_time.lower() == 'no':
-                break
-            else:
-                print('Type yes/no')
-
-        if enter_students_online_lessons_time == "yes":
-            print(f"Here is the total students number entered so far {len(student_object_list)}. The student numbers starts from the 0")
-            enter_student_id = Helper.input_digit_from_user("Enter the student number")
-            add_student_online_lessons_time = Helper.input_digit_from_user("Add the student online lessons time")
-            new_online_lessons_time = student_object_list[enter_student_id].set_online_lessons_time(add_student_online_lessons_time)
-            print(f" The student's online lessons time {student_object_list[enter_student_id].get_online_lessons_time()}")
-            print(f"The total student lessons time is - {student_object_list[enter_student_id].get_total_lessons_time()}")
-
-
-
-        Helper.students_print(student_object_list)
-        Helper.input_users_into_file(student_object_list)
-        logging.info(student_object_list)
+    Helper.students_print(student_object_list)
+    Helper.input_users_into_file(student_object_list)
+    logging.info(student_object_list)
 
 
 else:
-
-
-    # Input students form StudentsList.txt file to StudentsReport.txt file
+    # Display students form a json file
     file_path_name = input("Input the “StudentsList.json” file path (Like C:\\Users\\'username'\\Downloads or C:\\Users\\username\\Documents): ")
     os.chdir(file_path_name)
     try:
         with open("StudentsList.json", "r") as file:
-
             students_data = json.load(file)
-
-        for student_main_key_is_dict, student_main_value_is_list in students_data.items():
-            print(f"{student_main_key_is_dict} >>> [")
-
-            for student_dict in student_main_value_is_list:
-                for student_info_key, student__info_value in student_dict.items():
-                    print(f"{student_info_key.title()}: {student__info_value}")
-
-            print("]")
-
+        print(json.dumps(students_data, indent=4))
     except FileNotFoundError:
         print("The file doesn't exist.")
         logging.error(f"The file doesn't exist.")

@@ -38,7 +38,7 @@ class Helper:
     # Store the user data in file
     def input_users_into_file(student_object_list):
         try:
-            with open("C:\\Users\\Narek\\PycharmProjects\\Student_Management_System\\StudentsReport.json", "a") as file:
+            with open("./StudentsReport.json", "a") as file:
                 students_list = []
                 for student_object in student_object_list:
                     item = {
@@ -53,7 +53,7 @@ class Helper:
                               "online_lessons_time": student_object.get_online_lessons_time(),
                             }
                     students_list.append(item)
-                students = {"student": students_list}
+                students = {"students": students_list}
                 json.dump(students, file, indent=4)
         except FileNotFoundError:
             print("The file doesn't exist.")
@@ -83,3 +83,15 @@ class Helper:
             print(student_object.get_offline_lessons_time())
             print(student_object.get_online_lessons_time())
             print("------------------------------")
+
+    @staticmethod
+    # Print of student's data from json file
+    def students_print_from_json_file(students_data):
+        for student_main_key_is_dict, student_main_value_is_list in students_data.items():
+            print(f"{student_main_key_is_dict} : [")
+
+            for student_dict in student_main_value_is_list:
+                for student_info_key, student_info_value in student_dict.items():
+                    print(f"{student_info_key.title()}: {student_info_value} ")
+
+            print("]")
