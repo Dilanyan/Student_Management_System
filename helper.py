@@ -1,5 +1,6 @@
 import re
 import json
+import sqlite3
 
 class Helper:
     """
@@ -95,3 +96,38 @@ class Helper:
                     print(f"{student_info_key.title()}: {student_info_value} ")
 
             print("]")
+
+
+    @staticmethod
+    # Insert data to the DB
+    def db(student_object_list):
+        with sqlite3.connect("students.db") as connection:
+            cursor = connection.cursor()
+
+        cursor.execute('''CREATE TABLE IF NOT EXISTS students (id INTEGER PRIMARY KEY, student_id INTEGER, name TEXT, surname TEXT, email TEXT, exam_status TEXT, age INTEGER, grade INTEGER, offline_lessons_time INTEGER, online_lessons_time INTEGER)''')
+
+        # Insert data into the table
+
+        for student_object in student_object_list:
+            cursor.execute(
+                'INSERT INTO students (student_id, name, surname, email, exam_status, age, grade, offline_lessons_time, online_lessons_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (
+                    hash(student_object),
+                    student_object.get_name(),
+                    student_object.get_surname(),
+                    Helper.e_mmail(student_object.get_name(), student_object.get_surname(), hash(student_object)),
+                    student_object.get_pass_fail_exam(),
+                    student_object.get_age(),
+                    student_object.get_grade(),
+                    student_object.get_offline_lessons_time(),
+                    student_object.get_online_lessons_time()
+                )
+            )
+
+        # Query data from the table
+        cursor.execute('SELECT * FROM students')
+        rows = cursor.fetchall()
+
+        # Print the results
+        for row in rows:
+            print(row)
