@@ -131,3 +131,17 @@ class Helper:
         # Print the results
         for row in rows:
             print(row)
+
+    @staticmethod
+    # age validation
+    def age_validation(age):
+        if age < 18:
+            print("OOO, you are soooo young")
+            return False
+        elif age > 120:
+            print("Ufff, you are soooo old")
+            return False
+        else:
+            print("It is the right age, welcome")
+            return True
+
