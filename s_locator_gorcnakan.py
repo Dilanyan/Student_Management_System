@@ -1,5 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException
+import pytest
 
 driver = webdriver.Firefox()
 try:
@@ -14,6 +16,7 @@ try:
     element4 = driver.find_element(By.CLASS_NAME, "shopping_cart_link")
     assert element4.is_displayed()
 
-
+except NoSuchElementException:
+    print("Element not found!")
 finally:
     driver.quit()
